@@ -1,0 +1,15 @@
+﻿# Python cache
+__pycache__/
+*.py[cod]
+
+# Captured network traffic and logs
+packet_log.csv
+security_alerts.log
+*.pcap
+*.pcapng
+
+# Local environment and editor files
+.venv/
+venv/
+.env
+.vscode/
