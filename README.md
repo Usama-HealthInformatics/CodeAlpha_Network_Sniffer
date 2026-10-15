@@ -1,199 +1,73 @@
-﻿# CodeAlpha Cybersecurity Internship - Task 1
+﻿# CodeAlpha Cybersecurity Internship — Task 1
 
 ## Basic Network Sniffer and Security Monitor
 
-
-
 ### Overview
-
-A Python network monitoring tool developed for the CodeAlpha cybersecurity internship task. It captures packets from a selected network interface, displays network metadata, identifies common services using port-based heuristics, tracks traffic statistics, and supports basic security-event detection.
-
-
+This project is a Python-based network sniffer developed as part of my CodeAlpha Cybersecurity Internship. It uses Scapy to capture network packets and inspect network traffic metadata for basic security monitoring.
 
 ### Features
-
-- Live packet capture using Scapy
-
-- IPv4 and IPv6 address display
-
-- TCP, UDP, ICMP, and ARP packet classification
-
-- Source and destination port display
-
-- Basic service identification
-
-- Packet capture statistics
-
-- Traffic filtering in earlier versions
-
-- CSV packet metadata logging in V5
-
-- Port-based security monitoring for FTP, Telnet, SMB, and RDP
-
-- Security-event logging in V7 and V8
-
-
+- Capture live network packets.
+- Display packet metadata, including source and destination addresses.
+- Identify common protocols and services.
+- Display packet statistics.
+- Apply traffic filters, where supported by the selected version.
+- Log packet metadata to CSV.
+- Flag selected traffic involving services such as FTP, Telnet, SMB, and RDP.
+- Record basic security events.
 
 ### Technologies
-
-- Python 3.14
-
+- Python
 - Scapy
-
 - Npcap
-
-- Windows PowerShell
-
-- CSV and text-based logging
-
-
+- Git and GitHub
 
 ### Requirements
-
-- Windows 10 or Windows 11
-
-- Python 3.14
-
-- Scapy
-
-- Npcap
-
-- Permission to capture traffic on the selected interface
-
-
+- Windows, Linux, or another Scapy-supported operating system.
+- Python 3.14 or another version compatible with the installed Scapy release.
+- Scapy 2.8.0.
+- Npcap on Windows for packet capture.
+- Permission to capture traffic on the selected network interface.
 
 ### Installation
+1. Install Python.
+2. Install Npcap on Windows if required.
+3. Clone this repository:
 
-Install Scapy:
+   ```bash
+   git clone https://github.com/Usama-HealthInformatics/CodeAlpha_Network_Sniffer.git
+   cd CodeAlpha_Network_Sniffer
+   ```
 
+4. Install the dependencies:
 
-
-```powershell
-
-py -3.14 -m pip install scapy
-
-```
-
-
-
-### Configuration
-
-Open `network\_sniffer.py` and check that the `INTERFACE` setting matches your network adapter.
-
-
-
-The current configuration uses:
-
-
-
-`Intel(R) Wi-Fi 6E AX211 160MHz`
-
-
-
-Change it if your adapter name is different.
-
-
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
 
 ### Usage
+Run the script from a terminal with the permissions required for packet capture:
 
-From the project directory, run:
-
-
-
-```powershell
-
-py -3.14 network\_sniffer.py
-
+```bash
+python network_sniffer.py
 ```
 
+Select the available interface or traffic filter if prompted. Follow the on-screen instructions to view traffic and stop the capture.
 
-
-Press `Ctrl+C` to stop the capture and display the summary.
-
-
-
-### Security Monitoring
-
-The current detector checks ports associated with:
-
-
-
-| Service | Port | Severity |
-
-|---|---:|---|
-
-| FTP | 21 | Medium |
-
-| Telnet | 23 | High |
-
-| SMB | 445 | Medium |
-
-| RDP | 3389 | Medium |
-
-
-
-These are basic port-based indicators. A matching packet does not automatically indicate an attack or confirm that a service is running.
-
-
-
-### Testing
-
-The tool was tested on Windows 11 with Scapy and Npcap. Successful runs captured live TCP, UDP, IPv6, HTTPS/TLS, and QUIC-related traffic and displayed packet statistics.
-
-
-
-Capture counts and security alerts vary by session. A session with zero alerts means no packets matched the implemented alert conditions during that capture; it does not prove that the network is threat-free.
-
-
+### Security and Privacy
+Use this tool only on networks and devices you own or are explicitly authorized to monitor. Packet captures may expose sensitive information, so protect logs and avoid publishing captured traffic or personal data.
 
 ### Limitations
-
-- Service identification relies on port numbers rather than deep protocol inspection.
-
-- Encrypted application payloads are not decrypted.
-
-- Port-based rules can produce false positives and false negatives.
-
-- This project is a learning tool, not a replacement for a production IDS or SIEM.
-
-- The current detector implements only a small set of security rules.
-
-
-
-### Responsible Use
-
-Capture traffic only on systems and networks you own or are explicitly authorized to monitor. Review logs before publishing and remove sensitive addresses, hostnames, and other private information.
-
-
-
-### Learning Outcomes
-
-- Practical packet capture with Scapy
-
-- Understanding network protocols and ports
-
-- Working with IPv4 and IPv6 traffic
-
-- Traffic statistics and CSV logging
-
-- Basic security detection and event logging
-
-- Documenting a cybersecurity project
-
-
+This is an educational project, not a production-grade intrusion detection system. Port-based alerts are basic heuristics and do not prove malicious activity. Encrypted traffic generally prevents inspection of application contents.
 
 ### Future Improvements
+- Add unit tests and improved error handling.
+- Improve protocol identification and alert accuracy.
+- Add configurable detection rules.
+- Create visual summaries of packet statistics.
+- Document test cases and sample results.
 
-- Automated tests for detection rules
+### Author
+**Usama** — Cybersecurity learner interested in network security, SOC operations, and defensive security.
 
-- Improved connection-state and traffic-direction tracking
-
-- Structured event logging
-
-- Better error handling
-
-- Synthetic packet tests and screenshots
-
-- Optional visualization dashboard
-
+GitHub: https://github.com/Usama-HealthInformatics
 
