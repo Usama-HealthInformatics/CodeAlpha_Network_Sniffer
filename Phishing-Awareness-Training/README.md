@@ -1,72 +1,80 @@
-﻿\# Phishing Awareness Training
+﻿# Phishing Awareness Training
 
+**CodeAlpha Cybersecurity Internship — Task 2**
 
+*Spot the Signs. Stop the Click.*
 
-\## Overview
+## Overview
 
-A beginner-friendly cybersecurity awareness project explaining how to recognize phishing, verify suspicious requests, and report potential attacks.
+This project is a beginner-friendly cybersecurity awareness training resource designed to help people recognize phishing attempts, identify suspicious messages and websites, and respond safely to potential social engineering attacks.
 
+## Learning Objectives
 
+- Recognize common phishing warning signs.
+- Identify suspicious links, email addresses, and urgent requests.
+- Understand social engineering techniques.
+- Learn safe ways to verify requests and protect accounts.
+- Know how to report suspicious emails or messages.
 
-\## Deliverables
+## Project Deliverables
 
-\- `Phishing\_Awareness\_Training.pptx` — phishing awareness training presentation.
+### 1. Training Presentation
 
-\- `Phishing\_Awareness\_Quiz.md` — 10-question quiz with a separate answer key.
+[**View the Phishing Awareness Training in Google Slides**](https://docs.google.com/presentation/d/1Zu27b9VnYRaZxaY1ylqV10-cozlyUd9frs1bmwnNf6c/edit?usp=sharing)
 
+The presentation covers phishing warning signs, prevention practices, and safe responses. Google Slides access must be configured so reviewers can view the presentation.
 
+[Download the PowerPoint presentation](./Phishing_Awareness_Training.pptx)
 
-\## Learning Objectives
+### 2. Knowledge Assessment Quiz
 
-\- Identify common phishing techniques.
+[**Open the Phishing Awareness Quiz and Answer Key**](./Phishing_Awareness_Quiz.md)
 
-\- Recognize suspicious emails, links, and attachments.
+The quiz contains 10 multiple-choice questions, a separate answer key with explanations, and scoring instructions.
 
-\- Understand social engineering tactics.
+**Passing score:** 8 out of 10.
 
-\- Apply safe verification and reporting practices.
+## Topics Covered
 
-\- Learn what to do after clicking a suspicious link.
+- Phishing emails and fake websites
+- Suspicious links and attachments
+- Sender addresses and impersonation
+- Urgent or unusual requests
+- Passwords and verification codes
+- Spear phishing and social engineering
+- Reporting suspicious work emails
 
+## How to Use This Project
 
+1. Review the training presentation.
+2. Complete all 10 quiz questions before checking the answer key.
+3. Compare your answers with the answer key.
+4. Review the explanations for any missed questions.
 
-\## How to Use
+## Tools and Format
 
-1\. Review the presentation.
+- Google Slides — presentation
+- Markdown — quiz and documentation
+- GitHub — project hosting and version control
 
-2\. Complete all 10 quiz questions before checking the answer key.
+## Safety and Ethics
 
-3\. Record your score and review missed answers.
+This project is for cybersecurity education and awareness. Do not send phishing simulations to real people or collect real credentials without explicit authorization. Use the guidance responsibly and report suspicious activity through appropriate channels.
 
-4\. Follow your organization's security policies when reporting incidents.
+## Project Structure
 
+```text
+Phishing-Awareness-Training/
+├── README.md
+├── Phishing_Awareness_Training.pptx
+└── Phishing_Awareness_Quiz.md
+```
 
+## Author
 
-\## Safety
+**Usama**  
+Cybersecurity learner interested in network security, SOC operations, and defensive security.
 
-This project is for educational purposes. Do not send phishing simulations to real people or collect real credentials without explicit authorization.
+[GitHub Profile](https://github.com/Usama-HealthInformatics)
 
-
-
-\## Privacy
-
-This is a faceless, voice-free project. No webcam or voice recording is required.
-
-
-
-\## Author
-
-Usama — CodeAlpha Cybersecurity Internship, Task 2
-
-
-
-[GitHub: https://github.com/Usama-HealthInformatics](https://github.com/Usama-HealthInformatics/CodeAlpha_Network_Sniffer/tree/main/Phishing-Awareness-Training)
-
-
-
-## View the Presentation
-
-[**Open Phishing Awareness Training in Google Slides**](https://docs.google.com/presentation/d/1Zu27b9VnYRaZxaY1ylqV10-cozlyUd9frs1bmwnNf6c/edit?usp=sharing)
-
-View the complete training presentation in your browser. No PowerPoint installation is required.
-
+**Internship:** CodeAlpha Cybersecurity Internship — Task 2
