@@ -59,31 +59,41 @@
 
 
 
-\*\*Do not check the answer key until you have answered all 10 questions.\*\*
+**Do not check the answer key until you have answered all 10 questions.**
 
 
 
-\*\*Scoring:\*\* Award 1 point for each correct answer. A score of 8/10 or higher passes.
+**Scoring:** Award 1 point for each correct answer. A score of 8/10 or higher passes.
 
 
 
+1\. B — Verify independently before acting.
+
+2\. B — HTTPS encrypts traffic but does not prove trustworthiness.
+
+3\. B — Confirm unusual financial requests separately.
+
+4\. A — Never disclose verification codes in response to unexpected messages.
+
+5\. A — Spear phishing targets a specific person or group.
+
+6\. B — Close the page and report the incident.
+
+7\. A — Respond promptly and contact the appropriate security team.
+
+8\. B — Display names can be imitated.
+
+9\. B — Use a trusted route to the service.
+
+10\. C — Follow the official reporting process.
 
 
-1. B — Verify independently before acting.
-2. B — HTTPS encrypts traffic but does not prove trustworthiness.
-3. B — Confirm unusual financial requests separately.
-4. A — Never disclose verification codes in response to unexpected messages.
-5. A — Spear phishing targets a specific person or group.
-6. B — Close the page and report the incident.
-7. A — Respond promptly and contact the appropriate security team.
-8. B — Display names can be imitated.
-9. B — Use a trusted route to the service.
-10. C — Follow the official reporting process.
 
-## Completion Record
+# Completion Record
 
 * Learner:
 * Date:
 * Score: \_\_\_\_ / 10
 * Topics to review:
+
 
