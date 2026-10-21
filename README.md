@@ -71,3 +71,14 @@ This is an educational project, not a production-grade intrusion detection syste
 
 GitHub: https://github.com/Usama-HealthInformatics
 
+
+
+## Other CodeAlpha Internship Project
+
+### Task 2 — Phishing Awareness Training
+
+A cybersecurity awareness project covering phishing warning signs, suspicious links, social engineering, and safe reporting practices.
+
+- [View the project files and presentation link](https://github.com/Usama-HealthInformatics/CodeAlpha_Network_Sniffer/tree/main/Phishing-Awareness-Training)
+- Deliverables: Google Slides presentation, downloadable PowerPoint file, and a 10-question quiz with an answer key.
+
