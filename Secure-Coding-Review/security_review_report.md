@@ -1,214 +1,240 @@
-\## 8. Security Testing and Validation
+# Secure Coding Review Report
 
+**CodeAlpha Cybersecurity Internship — Task 3**
 
+**Author:** Usama  
+**Python Version:** 3.14.8  
+**Static Analysis Tool:** Bandit 1.9.4  
+**Project Type:** Educational secure-coding review
 
-\### Test 1: Vulnerable Login Application
+## 1. Introduction
 
+This project reviews an intentionally vulnerable Python login application and compares it with an improved implementation. The objective is to identify security weaknesses, recommend remediation, and validate the improvements using static analysis and automated tests.
 
+The project is for educational purposes and is not a production authentication system.
 
-\*\*Objective:\*\* Check whether the original application safely handles login input.
+## 2. Scope of Review
 
+The review covers:
 
+- SQL query construction and SQL injection risks.
+- Password handling and storage.
+- Login validation and failure behavior.
+- Exposure of sensitive information.
+- Static analysis using Bandit.
+- Automated tests of the secure demonstration.
 
-\*\*Test method:\*\* Conducted local testing using dummy credentials and controlled SQL injection input.
+## 3. Vulnerable Application
 
+**File:** `vulnerable_app.py`
 
+The vulnerable demonstration intentionally uses insecure coding patterns to illustrate potential security weaknesses.
 
-\*\*Expected secure behavior:\*\* Invalid credentials must be rejected, and user input must not alter the intended SQL query.
+### 3.1 SQL Injection
 
+**Finding:** SQL query construction incorporates input into a query string.
 
+**Risk:** An attacker may manipulate the intended SQL query through crafted input.
 
-\*\*Result:\*\* The original implementation uses dynamically constructed SQL. This creates a SQL injection vulnerability that requires remediation.
+**Recommendation:** Use parameterized SQL statements so user input is treated as data rather than executable SQL.
 
+### 3.2 Hardcoded Demo Credentials
 
+**Finding:** The vulnerable demonstration includes fixed example credentials.
 
-\### Test 2: Secure Login — Valid Credentials
+**Risk:** Hardcoded credentials can be exposed through source code and may be reused inappropriately.
 
+**Recommendation:** Avoid hardcoded credentials in real applications. Use an appropriate account-management and secret-handling design.
 
+### 3.3 Password Handling
 
-\*\*Objective:\*\* Confirm that the secure demonstration accepts the correct username and password.
+**Finding:** The vulnerable example does not use the improved salted password-hashing approach implemented in the secure demonstration.
 
+**Risk:** Inadequate password storage can expose users if stored credentials are disclosed.
 
+**Recommendation:** Store passwords using a suitable password-hashing function with a unique salt and appropriate work factor.
 
-\*\*Expected result:\*\* Login successful.
+### 3.4 Sensitive Output
 
+**Finding:** The vulnerable example prints SQL query information.
 
+**Risk:** Logging or displaying sensitive query details can expose implementation information.
 
-\*\*Actual result:\*\* Record the result after completing the valid-credentials test.
+**Recommendation:** Avoid unnecessary sensitive output. Use controlled logging that does not disclose secrets.
 
+## 4. Secure Application
 
+**File:** `secure_app.py`
 
-\### Test 3: Secure Login — Incorrect Password
+The improved demonstration addresses the principal weaknesses identified in the vulnerable example.
 
+### 4.1 Parameterized SQL
 
+SQL queries use placeholders and separately supplied parameters.
 
-\*\*Objective:\*\* Confirm that the secure demonstration rejects an incorrect password.
+**Security benefit:** User-provided login input is treated as data rather than being directly inserted into SQL query syntax.
 
+### 4.2 Password Hashing
 
+The application uses PBKDF2-HMAC-SHA256 with a random salt and a configured iteration count of 600,000.
 
-\*\*Expected result:\*\* Login failed.
+**Security benefit:** The application stores a derived password hash instead of the original password.
 
+### 4.3 Login Validation
 
+The application checks the submitted password against the stored hash and uses `hmac.compare_digest` for comparison.
 
-\*\*Actual result:\*\* Record the result after completing the incorrect-password test.
+**Security benefit:** Incorrect credentials are rejected, and hash comparison uses a constant-time comparison function.
 
+### 4.4 Reduced Information Disclosure
 
+The secure demonstration returns a generic login failure message for an unknown username or incorrect password.
 
-\### Test 4: Parameterized SQL
+**Security benefit:** It avoids revealing which of those two login conditions failed.
 
+## 5. Recommendations
 
+1. Use parameterized SQL queries throughout the application.
+2. Never hardcode real credentials or secrets in source code.
+3. Store passwords using a suitable salted password-hashing function.
+4. Avoid printing passwords, secrets, or sensitive query information.
+5. Use generic authentication failure messages.
+6. Add appropriate rate limiting and account-protection measures before deploying a real authentication service.
+7. Perform automated testing, dependency checks, and manual security reviews.
 
-\*\*Objective:\*\* Verify that login queries use parameterized SQL statements.
+## 6. Remediation Summary
 
+| Security area | Vulnerable approach | Improved approach |
+|---|---|---|
+| SQL queries | String-based query construction | Parameterized SQL |
+| Password storage | Does not use the improved salted hashing approach | Salted PBKDF2-HMAC-SHA256 hash |
+| Login comparison | Insecure demonstration logic | Hash verification with `hmac.compare_digest` |
+| Failure messages | Insecure example behavior | Generic login failure message |
+| Testing | Deliberately vulnerable demonstration | Automated tests and static analysis |
 
+## 7. Testing Approach
 
-\*\*Expected result:\*\* User input is treated as data rather than executable SQL.
+Testing includes a review of the vulnerable implementation, a static-analysis comparison using Bandit, and automated tests of the secure implementation.
 
+The automated test suite checks:
 
+- Successful login with valid credentials.
+- Rejection of an incorrect password.
+- Rejection of an unknown username.
+- Rejection of SQL injection input as a valid login.
+- Storage of a password hash rather than the original password.
 
-\*\*Status:\*\* Verified by source-code inspection; additional automated tests are recommended.
+## 8. Security Testing and Validation
 
+### Test 1: Vulnerable Login Application
 
+**Objective:** Identify unsafe handling of login input.
 
-\### Test 5: Password Storage
+**Method:** Review the source code and use controlled educational test input.
 
+**Finding:** The original implementation constructs SQL dynamically, creating a SQL injection vulnerability.
 
+**Result:** The issue is documented for remediation.
 
-\*\*Objective:\*\* Verify that passwords are not stored directly in the database.
+### Test 2: Secure Login — Valid Credentials
 
+**Objective:** Confirm that the secure demonstration accepts the correct username and password.
 
+**Expected result:** Login successful.
 
-\*\*Expected result:\*\* The demonstration stores a salted PBKDF2 password hash rather than the original password.
+**Validation:** The automated valid-login test passed.
 
+### Test 3: Secure Login — Incorrect Password
 
+**Objective:** Confirm that an incorrect password is rejected.
 
-\*\*Status:\*\* Verified by source-code inspection.
+**Expected result:** Login failed.
 
+**Validation:** The automated incorrect-password test passed.
 
+### Test 4: Parameterized SQL
 
-\### Testing Limitations
+**Objective:** Verify that SQL input cannot bypass login validation through query manipulation.
 
+**Expected result:** User input is treated as data.
 
+**Validation:** The source uses parameterized SQL, and the automated SQL injection input test passed.
 
-The secure application uses an in-memory database and creates a new demo account on each run. These tests demonstrate basic secure-coding concepts and do not establish production readiness. Further automated testing, dependency checks, and independent review would be required for a production application.
+### Test 5: Password Storage
 
+**Objective:** Confirm that the original password is not stored directly.
 
+**Expected result:** The database stores a salted password hash.
 
-\## 9. Static Analysis Results — Bandit
+**Validation:** The automated password-storage test passed.
 
+### Testing Limitations
 
+The secure demonstration uses an in-memory database and creates a new demo account on each run. These tests cover basic educational security concepts and do not establish production readiness.
 
-\*\*Tool:\*\* Bandit 1.9.4  
+## 9. Static Analysis Results — Bandit
 
-\*\*Python version:\*\* 3.14.8  
+**Tool:** Bandit 1.9.4  
+**Python version:** 3.14.8  
+**Scan date:** October 23, 2026
 
-\*\*Scan date:\*\* October 23, 2026
+### 9.1 Vulnerable Application Scan
 
+**File:** `vulnerable_app.py`
 
+- Total issues: 1
+- Finding: B608 — possible SQL injection through string-based query construction
+- Severity: Medium
+- Confidence: Low
+- Reported location: Line 25
 
-\### Vulnerable Application Scan
+**Analysis:** The query construction triggered a Bandit warning because SQL syntax incorporates dynamically constructed input. Parameterized queries are recommended.
 
+### 9.2 Secure Application Scan
 
+**File:** `secure_app.py`
 
-\*\*File:\*\* `vulnerable\_app.py`
+- Total issues: 0
+- Bandit result: No issues identified.
 
+**Analysis:** Bandit did not identify issues in the secure version during this scan. This does not prove that the application is completely secure or that all vulnerabilities have been detected.
 
+### 9.3 Comparison
 
-\- Total issues: 1
+The vulnerable version triggered a B608 warning, while the secure version uses parameterized SQL and did not trigger a finding in this scan.
 
-\- Finding: B608 — possible SQL injection through string-based query construction
+### 9.4 Limitations
 
-\- Severity reported by Bandit: Medium
+Static analysis is only one part of a security review. Manual source-code inspection and functional testing are also necessary.
 
-\- Confidence reported by Bandit: Low
+## 10. Automated Test Results
 
-\- Location: Line 25
-
-
-
-\*\*Analysis:\*\* The SQL query incorporates user-controlled values directly into a query string. Parameterized queries should be used to prevent user input from changing SQL query logic.
-
-
-
-\### Secure Application Scan
-
-
-
-\*\*File:\*\* `secure\_app.py`
-
-
-
-\- Total issues: 0
-
-\- Bandit result: No issues identified
-
-
-
-\*\*Analysis:\*\* Bandit did not identify any issues in the secure version during this scan. This result does not guarantee that the application is completely secure or that every vulnerability has been detected.
-
-
-
-\### Comparison
-
-
-
-The vulnerable version triggered a Bandit SQL query construction warning. The secure version uses parameterized SQL statements and did not trigger a finding in this scan.
-
-
-
-\### Limitations
-
-
-
-Static analysis is only one part of a security review. Manual inspection and functional tests are also necessary. Login testing must confirm that valid credentials succeed and incorrect credentials fail before those results can be marked as verified.
-
-
-
-
-
-\## 10. Automated Test Results
-
-
-
-\*\*Testing tool:\*\* Python `unittest`  
-
-\*\*Python version:\*\* 3.14  
-
-\*\*Result:\*\* PASS — all 5 tests passed.
-
-
+**Testing tool:** Python `unittest`  
+**Python version:** 3.14  
+**Result:** PASS — all five tests passed.
 
 | Test | Result |
-
 |---|---|
-
 | Valid login accepted | PASS |
-
 | Incorrect password rejected | PASS |
-
 | Unknown username rejected | PASS |
-
 | SQL injection input rejected | PASS |
-
 | Password not stored as plaintext | PASS |
 
-
-
-\*\*Test command:\*\*
+**Test command:**
 
 ```powershell
-
-py -3.14 -m unittest -v test\_secure\_app
-
+py -3.14 -m unittest -v test_secure_app
 ```
 
+### Conclusion
 
+The review identified a SQL injection risk in the vulnerable demonstration and documented recommended remediation. The secure demonstration uses parameterized SQL, salted password hashing, and generic login failure messages.
 
-\*\*Conclusion:\*\* The tests confirm that the secure demonstration accepts valid credentials, rejects invalid login attempts, uses parameterized SQL queries, and stores a salted password hash rather than the original password.
+Bandit reported one B608 finding in the vulnerable application and no findings in the secure application. All five automated tests passed.
 
+These results support the educational comparison but do not establish that the application is production-ready or free from all vulnerabilities.
 
+## Responsible Use
 
-\*\*Limitations:\*\* These are basic automated tests of an educational application. They do not establish that the application is production-ready or free of all security vulnerabilities.
-
-
-
+This project is intended for authorized educational testing and secure-coding practice. Do not deploy the intentionally vulnerable application or test systems without appropriate authorization.

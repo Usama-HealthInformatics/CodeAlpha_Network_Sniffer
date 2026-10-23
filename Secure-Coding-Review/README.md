@@ -1,108 +1,151 @@
-
 # Secure Coding Review
 
 **CodeAlpha Cybersecurity Internship — Task 3**
 
-## Overview
+**Author:** Usama  
+**Project:** Secure Coding Review  
+**Language:** Python
 
-This project demonstrates a secure coding review by comparing an intentionally vulnerable Python login application with an improved version. It identifies common security weaknesses, documents recommended fixes, and uses automated tests and Bandit static analysis to evaluate the improvements.
+## 1. Overview
 
-## Project Objectives
+This project demonstrates a secure coding review by comparing an intentionally vulnerable Python login application with an improved implementation.
 
-- Identify SQL injection vulnerabilities.
-- Demonstrate secure SQL query parameterization.
-- Improve password storage using salted PBKDF2-HMAC-SHA256 hashes.
-- Avoid hardcoded demo credentials in the secure implementation.
-- Reduce unnecessary exposure of sensitive information.
-- Validate security improvements using automated tests.
+The project identifies common security weaknesses, explains remediation techniques, and validates the improvements through static analysis and automated testing.
 
-## Project Files
+This is an educational project and is not a production authentication system.
+
+## 2. Objectives
+
+- Identify SQL injection risks.
+- Review password handling and storage.
+- Compare vulnerable and secure coding practices.
+- Use Bandit for Python static analysis.
+- Test authentication behavior with automated unit tests.
+- Document findings and security recommendations.
+
+## 3. Project Files
 
 | File | Description |
 |---|---|
-| `vulnerable_app.py` | Educational example containing intentional security weaknesses |
-| `secure_app.py` | Improved login demonstration |
-| `test_secure_app.py` | Five automated security and login tests |
-| `security_review_report.md` | Security findings, recommendations, and test results |
-| `bandit_vulnerable_report.txt` | Bandit scan report for the vulnerable application |
-| `bandit_secure_report.txt` | Bandit scan report for the secure application |
+| `vulnerable_app.py` | Demonstrates intentionally insecure login practices. |
+| `secure_app.py` | Demonstrates improved login security practices. |
+| `test_secure_app.py` | Contains automated tests for the secure application. |
+| `security_review_report.md` | Documents findings, recommendations, and test results. |
+| `bandit_vulnerable_report.txt` | Static analysis report for the vulnerable application. |
+| `bandit_secure_report.txt` | Static analysis report for the secure application. |
 
-## Requirements
+## 4. Security Issues Reviewed
 
-- Python 3.14
-- Bandit 1.9.4 for static analysis
-- Python standard-library modules for the application and tests
+### SQL Injection
 
-## How to Run
+The vulnerable example constructs SQL queries using input within a query string.
 
-Open PowerShell in the `Secure-Coding-Review` project folder.
+**Remediation:** Use parameterized SQL queries to treat user input as data.
 
-### Run the Vulnerable Demonstration
+### Password Storage
 
-```powershell
-py -3.14 vulnerable_app.py
-```
+The vulnerable example does not implement the improved salted password-hashing approach used in the secure version.
 
-This file intentionally demonstrates insecure coding patterns. Use it only for educational review.
+**Remediation:** Use an appropriate password-hashing function with a unique salt and suitable work factor.
 
-### Run the Secure Demonstration
+### Hardcoded Credentials
 
-```powershell
-py -3.14 secure_app.py
-```
+The vulnerable demonstration includes fixed example credentials.
 
-Create a demo account, then enter the same username and password at the login prompts to test a successful login.
+**Remediation:** Do not hardcode real credentials or secrets in application source code.
 
-### Run Automated Tests
+### Information Disclosure
+
+The vulnerable example displays SQL query information.
+
+**Remediation:** Avoid exposing sensitive implementation details and secrets.
+
+## 5. Security Improvements
+
+The secure demonstration includes:
+
+- Parameterized SQL queries.
+- PBKDF2-HMAC-SHA256 password hashing.
+- Random salts for password hashes.
+- A configured hashing iteration count of 600,000.
+- Password verification using `hmac.compare_digest`.
+- Generic login failure messages.
+- Automated tests for important authentication behaviors.
+
+## 6. Testing and Validation
+
+The project uses Python's `unittest` framework and Bandit static analysis.
+
+The five automated tests cover:
+
+1. Successful login with valid credentials.
+2. Rejection of an incorrect password.
+3. Rejection of an unknown username.
+4. Rejection of SQL injection input as valid login credentials.
+5. Verification that the original password is not stored as plaintext.
+
+### Run the Tests
+
+From the `Secure-Coding-Review` directory, run:
 
 ```powershell
 py -3.14 -m unittest -v test_secure_app
 ```
 
-All five automated tests passed during testing.
+**Recorded result:** All five automated tests passed.
 
-## Static Analysis
+### Run Static Analysis
 
-Bandit was used to scan both applications.
+Analyze the vulnerable application:
 
-- **Vulnerable application:** One B608 finding for a possible SQL injection vector; Medium severity and Low confidence.
-- **Secure application:** No issues identified by Bandit.
+```powershell
+py -3.14 -m bandit .\vulnerable_app.py
+```
 
-Static analysis has limitations. A clean scan does not guarantee that an application is free of vulnerabilities.
+Analyze the secure application:
 
-## Automated Test Results
+```powershell
+py -3.14 -m bandit .\secure_app.py
+```
 
-All five automated tests passed:
+**Recorded results from October 23, 2026:**
 
-1. Valid login accepted.
-2. Incorrect password rejected.
-3. Unknown username rejected.
-4. SQL injection input rejected.
-5. Password not stored as plaintext.
+- Vulnerable application: one B608 finding related to possible SQL injection.
+- Secure application: no issues identified by Bandit in that scan.
 
-## Security Improvements
+Static analysis cannot guarantee that an application is free of vulnerabilities.
 
-The secure demonstration uses:
+## 7. Tools and Technologies
 
-- Parameterized SQL queries.
-- Random salts and PBKDF2-HMAC-SHA256 password hashing.
-- Constant-time hash comparison with `hmac.compare_digest`.
-- Generic login failure messages.
-- An in-memory SQLite database for demonstration purposes.
+- Python 3.14
+- Bandit 1.9.4
+- SQLite
+- Python `unittest`
+- Git and GitHub
 
-## Limitations
+## 8. Learning Outcomes
 
-This is an educational project, not a production authentication system. It does not implement account lockout, rate limiting, persistent user storage, password-reset workflows, or a complete production security review.
+This project demonstrates practical experience with:
 
-## Responsible Use
+- Identifying insecure coding patterns.
+- Understanding SQL injection risks.
+- Improving password storage practices.
+- Writing automated security tests.
+- Running static analysis tools.
+- Documenting findings and remediation recommendations.
 
-The vulnerable application is provided solely for authorized education and testing. Do not use its insecure techniques in real applications or test systems without permission.
+## 9. Responsible Use
 
-## Author
+The vulnerable application is provided solely for authorized educational testing and secure-coding practice. Do not deploy it as a real authentication service or test systems without appropriate authorization.
 
-Usama — Cybersecurity learner interested in network security, SOC operations, and defensive security.
+## 10. Author
 
-GitHub: [Usama-HealthInformatics](https://github.com/Usama-HealthInformatics)
+**Usama**  
+Cybersecurity learner interested in network security, SOC operations, and defensive security.
 
+GitHub profile: https://github.com/Usama-HealthInformatics
 
+## Conclusion
+
+This project compares vulnerable and improved authentication code, documents security recommendations, and uses automated tests and static analysis to evaluate the improvements. It is a learning demonstration and does not establish production readiness.
 
